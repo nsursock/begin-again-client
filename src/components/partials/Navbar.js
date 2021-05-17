@@ -156,7 +156,7 @@ export default class Login extends Component {
                   </svg>
                 </button>
 
-                <div class="ml-3 relative">
+                <div class="ml-3 relative z-10">
                   <div>
                     <button
                       onClick={this.toggleProfileMenu}
