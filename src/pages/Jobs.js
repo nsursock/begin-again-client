@@ -106,6 +106,8 @@ const Jobs = () => {
             <Link
               class="text-indigo-600 hover:text-indigo-900"
               to={`/jobs/${id}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>Details</span>
             </Link>
@@ -159,11 +161,13 @@ const Jobs = () => {
                       {renderTableData(paginatedItems)}
                     </tbody>
                   </table>
-                  <TableBar
-                    numJobs={filteredItems.length}
-                    config={pageConfig}
-                    requestPage={requestPage}
-                  />
+                  {filteredItems.length !== 0 && (
+                    <TableBar
+                      numJobs={filteredItems.length}
+                      config={pageConfig}
+                      requestPage={requestPage}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -178,7 +182,7 @@ const Jobs = () => {
                 </label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                   <input
-                    onChange={(event) => {
+                    onInput={(event) => {
                       requestFilter(event.target.value);
                       requestPage(0, pageConfig.pageSize);
                     }}

@@ -7,11 +7,12 @@ export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: RichTextEditor.createEmptyValue(),
       error: null,
       user: auth().currentUser,
       title: null,
       experience: "Beginner",
-      about: RichTextEditor.createEmptyValue(),
+      about: null,
       city: null,
       country: "Afghanistan",
       schedule: "Part-time",
@@ -27,10 +28,6 @@ export default class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleChangeRTE = (value) => {
-    this.setState({ about: value });
-  };
 
   handleChange(event) {
     this.setState({
@@ -51,7 +48,7 @@ export default class Form extends Component {
       await db.ref("jobs").push({
         title: this.state.title,
         experience: this.state.experience,
-        description: this.state.about.toString("html"),
+        description: this.state.about,
         location: this.state.city + ", " + this.state.country,
         schedule: this.state.schedule,
         closingDate: this.state.closingDate,
@@ -124,12 +121,15 @@ export default class Form extends Component {
                         Description
                       </label>
                       <div class="mt-1">
-                        <RichTextEditor
-                          onChange={this.handleChangeRTE}
+                        <RichTextEditor value={this.state.value} />
+                        <textarea
+                          onChange={this.handleChange}
                           value={this.state.about}
                           id="about"
                           name="about"
+                          rows="4"
                           class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                          placeholder="Looking for an experienced web developer..."
                         />
                       </div>
                       <p class="mt-2 text-sm text-gray-500">
