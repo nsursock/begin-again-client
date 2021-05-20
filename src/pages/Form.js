@@ -116,28 +116,6 @@ export default class Form extends Component {
                       </select>
                     </div>
 
-                    <div class="col-span-2">
-                      <label
-                        for="about"
-                        class="block text-sm font-medium text-gray-700"
-                      >
-                        Description
-                      </label>
-                      <div class="mt-1">
-                        <RichTextEditor
-                          onChange={this.handleChangeRTE}
-                          value={this.state.about}
-                          id="about"
-                          name="about"
-                          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                      <p class="mt-2 text-sm text-gray-500">
-                        Brief description for your posting. URLs are
-                        hyperlinked.
-                      </p>
-                    </div>
-
                     <div class="col-span-2 md:col-span-1">
                       <label
                         for="city"
@@ -665,6 +643,27 @@ export default class Form extends Component {
                         />
                       </div>
                     </div>
+                  </div>
+
+                  <div class="col-span-2">
+                    <label
+                      for="about"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <div class="mt-1">
+                      <RichTextEditor
+                        onChange={this.handleChangeRTE}
+                        value={this.state.about}
+                        id="about"
+                        name="about"
+                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">
+                      Brief description for your posting. URLs are hyperlinked.
+                    </p>
                   </div>
 
                   <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">

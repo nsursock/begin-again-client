@@ -13,7 +13,14 @@ const Jobs = () => {
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
-    fields: ["title", "description", "location", "schedule", "closingDate"],
+    fields: [
+      "title",
+      "description",
+      "location",
+      "schedule",
+      "closingDate",
+      "experience",
+    ],
   });
   const { sortedItems, requestSort, sortConfig } = useSortableData(
     filteredItems

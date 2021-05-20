@@ -44,7 +44,6 @@ const Details = ({ match }) => {
     closingDate,
     description,
   } = job || {};
-  console.log(description);
   return (
     <div>
       <div class="lg:flex lg:items-center lg:justify-between m-8">
@@ -258,7 +257,7 @@ const Details = ({ match }) => {
           <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="mt-5 md:mt-0 md:col-span-2">
               <div class="shadow sm:rounded-md sm:overflow-hidden">
-                <div class="prose lg:prose-xl px-4 py-5 bg-white space-y-6 sm:p-6 overflow-x-auto">
+                <div class="prose lg:prose-xl max-w-none px-4 py-5 bg-white space-y-6 sm:p-6 overflow-x-auto">
                   {htmr(description)}
                 </div>
               </div>
