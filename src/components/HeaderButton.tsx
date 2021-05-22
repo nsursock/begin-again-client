@@ -1,7 +1,19 @@
 import React from "react";
 
-function HeaderButton({ caption, keys, config, requestSort }) {
-  const getSortDirection = (name) => {
+type Config = {
+  key: string;
+  direction: string;
+};
+
+interface Props {
+  caption: string;
+  keys: string;
+  config: Config;
+  requestSort: (keys: string) => void;
+}
+
+function HeaderButton({ caption, keys, config, requestSort }: Props) {
+  const getSortDirection = (name: string) => {
     if (!config) {
       return;
     }
@@ -11,7 +23,7 @@ function HeaderButton({ caption, keys, config, requestSort }) {
   return (
     <th scope="col">
       <button
-        class="focus:outline-none flex items-center justify-between w-full px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        className="focus:outline-none flex items-center justify-between w-full px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         type="button"
         onClick={() => requestSort(keys)}
       >
@@ -19,7 +31,7 @@ function HeaderButton({ caption, keys, config, requestSort }) {
         {getSortDirection(keys) === "descending" && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            className="h-5 w-5"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -33,7 +45,7 @@ function HeaderButton({ caption, keys, config, requestSort }) {
         {getSortDirection(keys) === "ascending" && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            className="h-5 w-5"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

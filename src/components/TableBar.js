@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 const TableBar = ({ numJobs, config, requestPage }) => {
-  const [barSize, setBarSize] = useState(10);
+  const [barSize, setBarSize] = useState(8);
   const [selectedBar, setSelectedBar] = useState(0);
 
   const calcNumPages = useCallback(() => {
