@@ -38,6 +38,7 @@ export default class Login extends Component {
     this.setState({ error: "" });
     try {
       await auth().signOut();
+      localStorage.removeItem("token");
       this.setState({ user: null });
     } catch (error) {
       this.setState({ error: error.message });
@@ -45,6 +46,7 @@ export default class Login extends Component {
   }
 
   render() {
+    const token = localStorage.getItem("token");
     return (
       <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -146,7 +148,10 @@ export default class Login extends Component {
                           <span class="sr-only">Open user menu</span>
                           <img
                             class="h-8 w-8 rounded-full"
-                            src={this.state.user.photoURL}
+                            src={
+                              this.state.user.photoURL +
+                              (token !== null ? `?access_token=${token}` : "")
+                            }
                             alt=""
                           />
                         </div>

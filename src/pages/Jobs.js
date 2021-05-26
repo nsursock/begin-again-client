@@ -4,8 +4,10 @@ import useFilterableData from "../hooks/FilterableData";
 import usePaginableData from "../hooks/PaginableData";
 import HeaderButton from "../components/HeaderButton";
 import TableBar from "../components/TableBar";
-import { Link } from "react-router-dom";
+
 import { db } from "../services/firebase";
+import ProfilePicture from "../components/ProfilePicture";
+import OptionsButton from "../components/OptionsButton";
 
 const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
@@ -55,22 +57,11 @@ const Jobs = () => {
     fetchData();
   }, []);
 
-  // function getPhotoUrl(uid) {
-  //   auth()
-  //     .getUser(uid)
-  //     .then((userRecord) => {
-  //       alert(userRecord.photoURL);
-  //       return userRecord.photoURL;
-  //     })
-  //     .catch((error) => {
-  //       setError("Error fetching user data: " + error.message);
-  //     });
-  // }
-
   const renderTableData = useCallback((jobs) => {
     return jobs.map((job, index) => {
       const {
         id,
+        uid,
         title,
         experience,
         schedule,
@@ -85,11 +76,7 @@ const Jobs = () => {
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
               <div class="flex-shrink-0 h-10 w-10">
-                <img
-                  class="h-10 w-10 rounded-full"
-                  src="https://thispersondoesnotexist.com/image"
-                  alt=""
-                />
+                <ProfilePicture id={uid} />
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">{title}</div>
@@ -110,14 +97,7 @@ const Jobs = () => {
             {currency} {salaryLow} - {salaryHigh}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <Link
-              class="text-indigo-600 hover:text-indigo-900"
-              to={`/jobs/${id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>Details</span>
-            </Link>
+            <OptionsButton jobId={id} userId={uid} />
           </td>
         </tr>
       );

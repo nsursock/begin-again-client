@@ -27,3 +27,7 @@ export function signInWithTwitter() {
   const provider = new auth.TwitterAuthProvider();
   return auth().signInWithPopup(provider);
 }
+
+export function saveFacebookToken(token) {
+  localStorage.setItem("token", token);
+}

@@ -6,6 +6,7 @@ import {
   signInWithGitHub,
   signInWithFacebook,
   signInWithTwitter,
+  saveFacebookToken,
 } from "../helpers/auth";
 
 export default class SignUp extends Component {
@@ -58,7 +59,8 @@ export default class SignUp extends Component {
 
   async facebookSignIn() {
     try {
-      await signInWithFacebook();
+      const result = await signInWithFacebook();
+      saveFacebookToken(result.credential.accessToken);
     } catch (error) {
       this.setState({ error: error.message });
     }
@@ -96,7 +98,7 @@ export default class SignUp extends Component {
             </p>
           </div>
           <div>
-            <div class="flex align-middle justify-between mb-3">
+            <div class="flex align-middle justify-around mb-3">
               <span class="">
                 <button
                   onClick={this.googleSignIn}
@@ -135,25 +137,7 @@ export default class SignUp extends Component {
                   <span class="hidden sm:block">Github</span>
                 </button>
               </span>
-              <span class="">
-                <button
-                  onClick={this.facebookSignIn}
-                  type="button"
-                  class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <svg
-                    class="sm:-ml-1 sm:mr-2 h-5 w-5 text-gray-500 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
-                  <span class="hidden sm:block">Facebook</span>
-                </button>
-              </span>
+
               <span class="">
                 <button
                   onClick={this.twitterSignIn}
