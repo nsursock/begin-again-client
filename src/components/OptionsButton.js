@@ -51,7 +51,7 @@ const OptionsButton = ({ jobId, userId }) => {
               Details
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="-mr-1 ml-2 h-5 w-5"
+                class=" ml-2 h-5 w-5"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -70,7 +70,7 @@ const OptionsButton = ({ jobId, userId }) => {
                   Edit
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="-mr-1 ml-2 h-5 w-5"
+                    class=" ml-2 h-5 w-5"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -92,7 +92,7 @@ const OptionsButton = ({ jobId, userId }) => {
                   Remove
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="-mr-1 ml-2 h-5 w-5"
+                    class=" ml-2 h-5 w-5"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >

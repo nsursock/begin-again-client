@@ -2,8 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import useSortableData from "../hooks/SortableData";
 import useFilterableData from "../hooks/FilterableData";
 import usePaginableData from "../hooks/PaginableData";
+import useToggle from "../hooks/ToggleElement";
 import HeaderButton from "../components/HeaderButton";
 import TableBar from "../components/TableBar";
+import FilterSlideOver from "../components/FilterSlideOver";
 
 import { db } from "../services/firebase";
 import ProfilePicture from "../components/ProfilePicture";
@@ -12,6 +14,7 @@ import OptionsButton from "../components/OptionsButton";
 const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
+  const [showPanel, setShowPanel] = useState(false);
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
@@ -34,6 +37,10 @@ const Jobs = () => {
       pageSize: 10,
     }
   );
+
+  const togglePanel = () => {
+    setShowPanel(!showPanel);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,10 +111,12 @@ const Jobs = () => {
     });
   }, []);
 
+  const { isShowing, toggle } = useToggle();
+
   return (
     <div class="my-8">
-      <div class="md:grid md:grid-cols-4 md:gap-6">
-        <div class="mt-5 md:mt-0 md:col-span-3">
+      <div class="md:grid md:grid-cols-4 md:gap-6 divide divide-x">
+        <div class="mt-5 md:mt-0 md:col-span-4">
           <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto">
               <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -139,8 +148,27 @@ const Jobs = () => {
                           config={sortConfig}
                           requestSort={requestSort}
                         />
-                        <th scope="col" class="relative px-6 py-3">
-                          <span class="sr-only">Edit</span>
+                        <th scope="col">
+                          <span class="sr-only">Search</span>
+                          <button
+                            onClick={toggle}
+                            className="focus:outline-none flex items-center justify-end w-full px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            type="button"
+                          >
+                            Search
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 ml-2"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </button>
                         </th>
                       </tr>
                     </thead>
@@ -160,30 +188,13 @@ const Jobs = () => {
             </div>
           </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-1 mr-8">
-          <div class="shadow sm:rounded-md sm:overflow-hidden">
-            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-              <div>
-                <label for="filter" class="text-sm font-medium text-gray-700">
-                  Search
-                </label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                  <input
-                    onInput={(event) => {
-                      requestFilter(event.target.value);
-                      requestPage(0, pageConfig.pageSize);
-                    }}
-                    type="text"
-                    name="search"
-                    id="search"
-                    class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Filter"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FilterSlideOver
+          isShowing={isShowing}
+          hide={toggle}
+          requestFilter={requestFilter}
+          requestPage={requestPage}
+          pageConfig={pageConfig}
+        />
       </div>
     </div>
   );
