@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const FilterSlideOver = ({
   isShowing,
@@ -7,7 +7,9 @@ const FilterSlideOver = ({
   requestPage,
   pageConfig,
 }) => {
-  if (!isShowing) return null;
+  if (!isShowing) {
+    return null;
+  }
   return (
     <div
       class="fixed inset-0 overflow-hidden z-50"
@@ -17,7 +19,7 @@ const FilterSlideOver = ({
     >
       <div class="absolute inset-0 overflow-hidden">
         <div
-          class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          class={`absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity `}
           aria-hidden="true"
         ></div>
 

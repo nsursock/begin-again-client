@@ -32,7 +32,7 @@ const OptionsButton = ({ jobId, userId }) => {
       <div
         class={`${
           slideLeft ? "-translate-x-full" : "translate-x-0"
-        } transition ease-in-out duration-1000 transform  ml-1`}
+        } transition ease-in-out duration-1000 transform ml-1`}
       >
         {showMenu && (
           <div
@@ -40,7 +40,7 @@ const OptionsButton = ({ jobId, userId }) => {
             aria-label="Options"
           >
             <Link
-              class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+              class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none "
               role="menuitem"
               tabindex="-1"
               id="menu-item-0"
@@ -62,7 +62,7 @@ const OptionsButton = ({ jobId, userId }) => {
               <>
                 <button
                   type="button"
-                  class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                  class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none "
                   id="menu-button"
                   aria-expanded="true"
                   aria-haspopup="true"
@@ -84,7 +84,7 @@ const OptionsButton = ({ jobId, userId }) => {
                 </button>
                 <button
                   type="button"
-                  class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                  class="inline-flex justify-center w-full first:rounded-l-md  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none "
                   id="menu-button"
                   aria-expanded="true"
                   aria-haspopup="true"
@@ -113,7 +113,7 @@ const OptionsButton = ({ jobId, userId }) => {
         type="button"
         class={`${
           showMenu ? "rounded-r-md" : "rounded-md"
-        } z-10  relative inline-flex justify-center w-32  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500`}
+        } z-10  relative inline-flex justify-center w-32  border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none `}
         id="menu-button"
         aria-expanded="true"
         aria-haspopup="true"
