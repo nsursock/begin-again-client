@@ -11,10 +11,9 @@ import { db } from "../services/firebase";
 import ProfilePicture from "../components/ProfilePicture";
 import OptionsButton from "../components/OptionsButton";
 
-const Jobs = () => {
+const Jobs = ({ loggedInUser }) => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
-  const [showPanel, setShowPanel] = useState(false);
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
@@ -37,10 +36,6 @@ const Jobs = () => {
       pageSize: 10,
     }
   );
-
-  const togglePanel = () => {
-    setShowPanel(!showPanel);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +99,11 @@ const Jobs = () => {
             {currency} {salaryLow} - {salaryHigh}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <OptionsButton jobId={id} userId={uid} />
+            <OptionsButton
+              jobId={id}
+              userId={uid}
+              loggedInUser={loggedInUser}
+            />
           </td>
         </tr>
       );

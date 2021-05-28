@@ -11,6 +11,8 @@ module.exports = {
   variants: {
     extend: {
       borderRadius: ["first", "last"],
+      borderWidth: ["responsive", "hover", "focus", "active", "disabled"],
+      borderColor: ["responsive", "hover", "focus", "active", "disabled"],
     },
   },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],

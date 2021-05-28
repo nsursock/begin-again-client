@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Jobs from "./pages/Jobs";
 import Form from "./pages/Form";
 import Details from "./pages/Details";
+import Applications from "./pages/Applications";
 import { auth } from "./services/firebase";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -19,11 +20,13 @@ import Navbar from "./components/partials/Navbar";
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true);
+        setLoggedInUser(user);
       } else {
         setAuthenticated(false);
       }
@@ -122,11 +125,17 @@ const App = () => {
           path="/jobs"
           authenticated={authenticated}
           component={Jobs}
+          loggedInUser={loggedInUser}
         ></PrivateRoute>
         <PrivateRoute
           path="/jobs/:jobId"
           authenticated={authenticated}
           component={Details}
+        ></PrivateRoute>
+        <PrivateRoute
+          path="/apps/:jobId"
+          authenticated={authenticated}
+          component={Applications}
         ></PrivateRoute>
         <PrivateRoute
           path="/form"
