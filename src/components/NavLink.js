@@ -7,8 +7,8 @@ function NavLink({ caption, address }) {
       to={address}
       class={`${
         useLocation().pathname === address
-          ? "bg-gray-900 text-white"
-          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+          ? "text-white bg-indigo-600 hover:bg-indigo-700"
+          : "text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
       } px-3 py-2 rounded-md text-sm font-medium`}
       aria-current="page"
     >

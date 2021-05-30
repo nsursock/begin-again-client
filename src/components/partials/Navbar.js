@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../services/firebase";
 import NavLink from "../NavLink";
+import { Transition } from "@headlessui/react";
 
 export default class Login extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export default class Login extends Component {
   render() {
     const token = localStorage.getItem("token");
     return (
-      <nav class="bg-gray-800">
+      <nav class="border-b border-gray-300">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -107,14 +108,14 @@ export default class Login extends Component {
               // </div>*/}
               <div class="hidden sm:block sm:ml-6">
                 <div class="flex space-x-4">
-                  <NavLink caption={"Jobs"} address={"/jobs"} />
-                  <NavLink caption={"Post"} address={"/form"} />
+                  <NavLink caption={"Explore Jobs"} address={"/jobs"} />
+                  <NavLink caption={"Post a Job"} address={"/form"} />
                 </div>
               </div>
             </div>
             {this.state.user ? (
               <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <button class="p-1 rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span class="sr-only">View notifications</span>
                   <svg
                     class="h-6 w-6"
@@ -133,7 +134,7 @@ export default class Login extends Component {
                   </svg>
                 </button>
 
-                <div class="ml-3 relative z-10">
+                <div class="ml-3 relative z-50">
                   <div>
                     <button
                       onClick={this.toggleProfileMenu}
@@ -169,7 +170,15 @@ export default class Login extends Component {
                     </button>
                   </div>
 
-                  {this.state.showProfileMenu && (
+                  <Transition
+                    show={this.state.showProfileMenu}
+                    enter="transition ease-in-out duration-500 transform"
+                    enterFrom="opacity-0 scale-x-0 -translate-x-1/2"
+                    enterTo="opacity-100 scale-x-100 translate-x-0"
+                    leave="transition ease-in-out duration-500 transform"
+                    leaveFrom="opacity-100 scale-x-100 translate-x-0"
+                    leaveTo="opacity-0 scale-x-0 -translate-x-1/2"
+                  >
                     <div
                       class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                       role="menu"
@@ -208,13 +217,13 @@ export default class Login extends Component {
                         Sign out
                       </button>
                     </div>
-                  )}
+                  </Transition>
                 </div>
               </div>
             ) : (
               <div class="flex items-end">
                 <Link
-                  class="flex items-center space-x-2 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="flex items-center space-x-2 text-indigo-600 bg-white hover:bg-indigo-50 px-3 py-2 rounded-md text-sm font-medium"
                   aria-current="page"
                   to="/login"
                 >
@@ -234,7 +243,7 @@ export default class Login extends Component {
                   <span class="md:block hidden">Log In</span>
                 </Link>
                 <Link
-                  class="flex items-center space-x-2 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="flex items-center space-x-2 text-indigo-600 bg-white hover:bg-indigo-50 px-3 py-2 rounded-md text-sm font-medium"
                   aria-current="page"
                   to="/signup"
                 >

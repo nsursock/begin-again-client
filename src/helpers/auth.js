@@ -8,9 +8,10 @@ export function login(email, password) {
   return auth().signInWithEmailAndPassword(email, password);
 }
 
-export function signInWithGoogle() {
+export async function signInWithGoogle() {
   const provider = new auth.GoogleAuthProvider();
-  return auth().signInWithPopup(provider);
+  const result = await auth().signInWithPopup(provider);
+  return result.user.getIdToken(/* forceRefresh */ true);
 }
 
 export function signInWithGitHub() {

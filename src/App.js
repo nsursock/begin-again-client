@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import Navbar from "./components/partials/Navbar";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -12,21 +13,29 @@ import Jobs from "./pages/Jobs";
 import Form from "./pages/Form";
 import Details from "./pages/Details";
 import Applications from "./pages/Applications";
+import PrivateRoute from "./helpers/PrivateRoute";
+import PublicRoute from "./helpers/PublicRoute";
 import { auth } from "./services/firebase";
-import PrivateRoute from "./components/PrivateRoute";
-import PublicRoute from "./components/PublicRoute";
-import Navbar from "./components/partials/Navbar";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true);
         setLoggedInUser(user);
+        user
+          .getIdToken(/* forceRefresh */ true)
+          .then((idToken) => {
+            setAuthToken(idToken);
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
       } else {
         setAuthenticated(false);
       }

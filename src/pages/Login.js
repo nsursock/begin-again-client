@@ -43,7 +43,7 @@ export default class Login extends Component {
 
   async googleSignIn() {
     try {
-      await signInWithGoogle();
+      return await signInWithGoogle();
     } catch (error) {
       this.setState({ error: error.message });
     }
