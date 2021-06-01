@@ -47,7 +47,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     return (
       <nav class="border-b border-gray-300">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -150,8 +150,8 @@ export default class Login extends Component {
                           <img
                             class="h-8 w-8 rounded-full"
                             src={
-                              this.state.user.photoURL +
-                              (token !== null ? `?access_token=${token}` : "")
+                              this.state.user.photoURL
+                              /*(token !== null ? `?access_token=${token}` : "")*/
                             }
                             alt=""
                           />

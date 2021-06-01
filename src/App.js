@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/partials/Navbar";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Signup from "./features/Signup";
+import Login from "./features/Login";
 import Jobs from "./pages/Jobs";
 import Form from "./pages/Form";
 import Details from "./pages/Details";
@@ -16,22 +16,27 @@ import Applications from "./pages/Applications";
 import PrivateRoute from "./helpers/PrivateRoute";
 import PublicRoute from "./helpers/PublicRoute";
 import { auth } from "./services/firebase";
+import { setLoggedInUser } from "./slices/user";
+import { useDispatch } from "react-redux";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  // const [loggedInUser, setLoggedInUser] = useState(null);
   const [authToken, setAuthToken] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true);
-        setLoggedInUser(user);
+        // setLoggedInUser(user);
+        dispatch(setLoggedInUser(user));
         user
           .getIdToken(/* forceRefresh */ true)
           .then((idToken) => {
             setAuthToken(idToken);
+            localStorage.setItem("token", idToken);
           })
           .catch(function (error) {
             console.error(error);
@@ -107,16 +112,24 @@ const App = () => {
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 animate-spin-slow mr-2"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
               >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
                 <path
-                  fill-rule="evenodd"
-                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                  clip-rule="evenodd"
-                />
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
               Loading
             </button>
@@ -125,44 +138,48 @@ const App = () => {
       </div>
     </div>
   ) : (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home}></Route>
-        <PrivateRoute
-          exact
-          path="/jobs"
-          authenticated={authenticated}
-          component={Jobs}
-          loggedInUser={loggedInUser}
-        ></PrivateRoute>
-        <PrivateRoute
-          path="/jobs/:jobId"
-          authenticated={authenticated}
-          component={Details}
-        ></PrivateRoute>
-        <PrivateRoute
-          path="/apps/:jobId"
-          authenticated={authenticated}
-          component={Applications}
-        ></PrivateRoute>
-        <PrivateRoute
-          path="/form"
-          authenticated={authenticated}
-          component={Form}
-        ></PrivateRoute>
-        <PublicRoute
-          path="/signup"
-          authenticated={authenticated}
-          component={Signup}
-        ></PublicRoute>
-        <PublicRoute
-          path="/login"
-          authenticated={authenticated}
-          component={Login}
-        ></PublicRoute>
-      </Switch>
-    </Router>
+    <React.Fragment>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home}></Route>
+          <PrivateRoute
+            exact
+            path="/jobs"
+            authenticated={authenticated}
+            component={Jobs}
+          ></PrivateRoute>
+          <PrivateRoute
+            path="/jobs/:jobId"
+            authenticated={authenticated}
+            component={Details}
+          ></PrivateRoute>
+          <PrivateRoute
+            path="/apps/:jobId"
+            authenticated={authenticated}
+            component={Applications}
+          ></PrivateRoute>
+          <PrivateRoute
+            path="/form"
+            authenticated={authenticated}
+            component={Form}
+          ></PrivateRoute>
+          <PublicRoute
+            path="/signup"
+            exact
+            authenticated={authenticated}
+            component={Signup}
+          ></PublicRoute>
+          <PublicRoute
+            path="/login"
+            exact
+            authenticated={authenticated}
+            component={Login}
+          ></PublicRoute>
+        </Switch>
+      </Router>
+      <div id="toast"></div>
+    </React.Fragment>
   );
 };
 

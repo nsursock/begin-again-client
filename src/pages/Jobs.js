@@ -11,7 +11,7 @@ import { db } from "../services/firebase";
 import ProfilePicture from "../components/ProfilePicture";
 import OptionsButton from "../components/OptionsButton";
 
-const Jobs = ({ loggedInUser }) => {
+const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
 
@@ -99,11 +99,7 @@ const Jobs = ({ loggedInUser }) => {
             {currency} {salaryLow} - {salaryHigh}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <OptionsButton
-              jobId={id}
-              userId={uid}
-              loggedInUser={loggedInUser}
-            />
+            <OptionsButton jobId={id} userId={uid} />
           </td>
         </tr>
       );

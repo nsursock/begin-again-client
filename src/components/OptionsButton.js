@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { auth } from "../services/firebase";
 import { Transition } from "@headlessui/react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../slices/user";
 
-const OptionsButton = ({ jobId, userId, loggedInUser }) => {
+const OptionsButton = ({ jobId, userId }) => {
   const [showMenu, setShowMenu] = useState(false);
+
+  const { user } = useSelector(userSelector);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -44,7 +48,7 @@ const OptionsButton = ({ jobId, userId, loggedInUser }) => {
               <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
             </svg>
           </Link>
-          {loggedInUser.uid === userId && (
+          {user.uid === userId && (
             <>
               <button
                 type="button"
