@@ -32,9 +32,18 @@ const Jobs = () => {
       "experience",
     ],
   });
-  const { sortedItems, requestSort, sortConfig } = useSortableData(
-    filteredItems
-  );
+
+  const transformRole = (title, experience) => {
+    return title + experience;
+  };
+
+  const {
+    sortedItems,
+    requestSort,
+    sortConfig,
+  } = useSortableData(filteredItems, null, [
+    { field: "role", func: transformRole },
+  ]);
   const { paginatedItems, requestPage, pageConfig } = usePaginableData(
     sortedItems,
     {

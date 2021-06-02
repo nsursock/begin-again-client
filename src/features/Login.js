@@ -12,7 +12,7 @@ import {
   signInWithTwitter,
   saveFacebookToken,
 } from "../helpers/auth";
-import Toast from "../components/Toast";
+import ToastAlert from "../components/ToastAlert";
 
 const Login = ({}) => {
   const [messages, setMessages] = useState([]);
@@ -290,18 +290,16 @@ const Login = ({}) => {
           </div>
         </form>
       </div>
-      <div class="flex flex-col flex-col-reverse absolute bottom-0 right-0 mb-5 max-h-4/5 overflow-y-auto ">
-        {messages.map((message, index) => {
-          return (
-            <Toast
-              key={index}
-              type={"error"}
-              title={"An error occurred"}
-              descr={message}
-            />
-          );
-        })}
-      </div>
+      {messages.map((message, index) => {
+        return (
+          <ToastAlert
+            key={index}
+            type={"error"}
+            title={"An error occurred"}
+            descr={message}
+          />
+        );
+      })}
     </div>
   );
 };

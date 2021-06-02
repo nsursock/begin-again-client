@@ -135,6 +135,10 @@ const App = () => {
     </div>
   ) : (
     <React.Fragment>
+      <div
+        class="absolute right-0 z-50 max-h-full overflow-y-auto"
+        id="toast"
+      ></div>
       <Router>
         <Navbar />
         <Switch>
@@ -174,7 +178,6 @@ const App = () => {
           ></PublicRoute>
         </Switch>
       </Router>
-      <div id="toast"></div>
     </React.Fragment>
   );
 };

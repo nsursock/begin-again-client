@@ -5,14 +5,12 @@ import NavLink from "./NavLink";
 import { Transition } from "@headlessui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { userSelector, setLoggedInUser } from "../slices/user";
-import Toast from "../components/Toast";
+import ToastAlert from "../components/ToastAlert";
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  // setErrorMessage("lorem upsim dolor sed arma verum");
 
   const { user } = useSelector(userSelector);
   const dispatch = useDispatch();
@@ -283,7 +281,7 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-      <Toast
+      <ToastAlert
         type={"error"}
         title={"An error occurred"}
         descr={errorMessage}

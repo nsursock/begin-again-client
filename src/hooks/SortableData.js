@@ -7,6 +7,7 @@ const useSortableData = (items, config = null) => {
     let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
+        // const transform = config.find((el) => el.field === sortConfig.key).func;
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "ascending" ? -1 : 1;
         }
