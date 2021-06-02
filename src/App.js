@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Navbar from "./components/partials/Navbar";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Signup from "./features/Signup";
 import Login from "./features/Login";
@@ -22,23 +22,19 @@ import { useDispatch } from "react-redux";
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const [loggedInUser, setLoggedInUser] = useState(null);
-  const [authToken, setAuthToken] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true);
-        // setLoggedInUser(user);
         dispatch(setLoggedInUser(user));
         user
           .getIdToken(/* forceRefresh */ true)
           .then((idToken) => {
-            setAuthToken(idToken);
             localStorage.setItem("token", idToken);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error(error);
           });
       } else {

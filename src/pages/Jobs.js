@@ -6,14 +6,20 @@ import useToggle from "../hooks/ToggleElement";
 import HeaderButton from "../components/HeaderButton";
 import TableBar from "../components/TableBar";
 import FilterSlideOver from "../components/FilterSlideOver";
-
+import PreviewModal from "../components/PreviewModal";
 import { db } from "../services/firebase";
 import ProfilePicture from "../components/ProfilePicture";
 import OptionsButton from "../components/OptionsButton";
+import { toKilo } from "../helpers/utils";
 
 const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
+
+  const togglePreview = () => {
+    setShowPreview(!showPreview);
+  };
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
@@ -80,10 +86,16 @@ const Jobs = () => {
               <div class="flex-shrink-0 h-10 w-10">
                 <ProfilePicture id={uid} />
               </div>
-              <div class="ml-4">
+              <div
+                class="ml-4"
+                onMouseEnter={togglePreview}
+                onMouseLeave={togglePreview}
+              >
                 <div class="text-sm font-medium text-gray-900">{title}</div>
                 <div class="text-sm text-gray-500">{experience}</div>
               </div>
+
+              <PreviewModal isShowing={showPreview} />
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
@@ -96,7 +108,7 @@ const Jobs = () => {
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {currency} {salaryLow} - {salaryHigh}
+            {currency} {toKilo(salaryLow)} - {toKilo(salaryHigh)}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <OptionsButton jobId={id} userId={uid} />

@@ -1,60 +1,50 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../services/firebase";
-import NavLink from "../NavLink";
+import { auth } from "../services/firebase";
+import NavLink from "./NavLink";
 import { Transition } from "@headlessui/react";
+import { useSelector, useDispatch } from "react-redux";
+import { userSelector, setLoggedInUser } from "../slices/user";
+import Toast from "../components/Toast";
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-      error: null,
-      showMobileMenu: false,
-      showProfileMenu: false,
-    };
-    this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
-    this.toggleProfileMenu = this.toggleProfileMenu.bind(this);
-  }
+const Navbar = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  toggleMobileMenu() {
-    this.setState({ showMobileMenu: !this.state.showMobileMenu });
-  }
+  // setErrorMessage("lorem upsim dolor sed arma verum");
 
-  toggleProfileMenu() {
-    this.setState({ showProfileMenu: !this.state.showProfileMenu });
-  }
+  const { user } = useSelector(userSelector);
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          user: user,
-        });
-      }
-    });
-  }
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
 
-  async handleLogout() {
-    this.setState({ error: "" });
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
+
+  const handleLogout = async () => {
+    setErrorMessage(null);
     try {
       await auth().signOut();
       localStorage.removeItem("token");
-      this.setState({ user: null });
-    } catch (error) {
-      this.setState({ error: error.message });
+      dispatch(setLoggedInUser(null));
+    } catch (e) {
+      setErrorMessage(e.message);
     }
-  }
+  };
 
-  render() {
-    // const token = localStorage.getItem("token");
-    return (
+  // const token = localStorage.getItem("token");
+  return (
+    <>
       <nav class="border-b border-gray-300">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
-                onClick={this.toggleMobileMenu}
+                onClick={toggleMobileMenu}
                 type="button"
                 class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                 aria-controls="mobile-menu"
@@ -113,7 +103,7 @@ export default class Login extends Component {
                 </div>
               </div>
             </div>
-            {this.state.user ? (
+            {user ? (
               <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button class="p-1 rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span class="sr-only">View notifications</span>
@@ -137,22 +127,19 @@ export default class Login extends Component {
                 <div class="ml-3 relative z-50">
                   <div>
                     <button
-                      onClick={this.toggleProfileMenu}
+                      onClick={toggleProfileMenu}
                       type="button"
                       class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                       id="user-menu-button"
                       aria-expanded="false"
                       aria-haspopup="true"
                     >
-                      {this.state.user.photoURL ? (
+                      {user.photoURL ? (
                         <div>
                           <span class="sr-only">Open user menu</span>
                           <img
                             class="h-8 w-8 rounded-full"
-                            src={
-                              this.state.user.photoURL
-                              /*(token !== null ? `?access_token=${token}` : "")*/
-                            }
+                            src={user.photoURL}
                             alt=""
                           />
                         </div>
@@ -171,7 +158,7 @@ export default class Login extends Component {
                   </div>
 
                   <Transition
-                    show={this.state.showProfileMenu}
+                    show={showProfileMenu}
                     enter="transition ease-in-out duration-500 transform"
                     enterFrom="opacity-0 scale-x-0 -translate-x-1/2"
                     enterTo="opacity-100 scale-x-100 translate-x-0"
@@ -210,9 +197,7 @@ export default class Login extends Component {
                         role="menuitem"
                         tabindex="-1"
                         id="user-menu-item-2"
-                        onClick={() => {
-                          this.handleLogout();
-                        }}
+                        onClick={handleLogout}
                       >
                         Sign out
                       </button>
@@ -263,7 +248,7 @@ export default class Login extends Component {
           </div>
         </div>
 
-        {this.state.showMobileMenu && (
+        {showMobileMenu && (
           <div class="sm:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
               <a
@@ -298,6 +283,14 @@ export default class Login extends Component {
           </div>
         )}
       </nav>
-    );
-  }
-}
+      <Toast
+        type={"error"}
+        title={"An error occurred"}
+        descr={errorMessage}
+        show={errorMessage !== null}
+      />
+    </>
+  );
+};
+
+export default Navbar;

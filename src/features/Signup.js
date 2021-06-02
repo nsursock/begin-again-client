@@ -12,7 +12,7 @@ import {
   signInWithTwitter,
   saveFacebookToken,
 } from "../helpers/auth";
-import Toast from "../components/partials/Toast";
+import Toast from "../components/Toast";
 
 const Signup = ({}) => {
   const [messages, setMessages] = useState([]);

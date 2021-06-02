@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../services/firebase";
+import { toKilo } from "../helpers/utils";
 import htmr from "htmr";
 
 const Details = ({ match }) => {
@@ -113,7 +114,7 @@ const Details = ({ match }) => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                  {salaryLow} &ndash; {salaryHigh} {currency}
+                  {toKilo(salaryLow)} &ndash; {toKilo(salaryHigh)} {currency}
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <svg
