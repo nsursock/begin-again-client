@@ -3,8 +3,7 @@ import ReactDOM, { createPortal } from "react-dom";
 import { Transition } from "@headlessui/react";
 
 const PreviewModal = ({ isShowing }) => {
-  return (
-    createPortal(
+  return createPortal(
       <Transition appear show={isShowing}>
         <div
           class="fixed z-10 inset-0 overflow-y-auto"
@@ -99,10 +98,9 @@ const PreviewModal = ({ isShowing }) => {
             </Transition.Child>
           </div>
         </div>
-      </Transition>
-    ),
-    document.querySelector("#modal")
-  );
+      </Transition>,
+      document.querySelector("#modal")
+    )
 };
 
 export default PreviewModal;
