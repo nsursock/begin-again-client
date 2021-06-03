@@ -178,6 +178,7 @@ const App = () => {
           ></PublicRoute>
         </Switch>
       </Router>
+      <div id="modal" />
     </React.Fragment>
   );
 };

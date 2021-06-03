@@ -8,13 +8,15 @@ const FilterSlideOver = ({
   requestPage,
   pageConfig,
 }) => (
-  <Transition show={isShowing}>
-    <div
-      class="fixed inset-0 overflow-hidden z-10"
-      aria-labelledby="slide-over-title"
-      role="dialog"
-      aria-modal="true"
-    >
+  <div
+    class={`${
+      !isShowing && "pointer-events-none"
+    } fixed inset-0 overflow-hidden z-10`}
+    aria-labelledby="slide-over-title"
+    role="dialog"
+    aria-modal="true"
+  >
+    <Transition show={isShowing}>
       <div class="absolute inset-0 overflow-hidden">
         <Transition.Child
           enter="transition-opacity ease-in-out duration-500"
@@ -110,8 +112,8 @@ const FilterSlideOver = ({
           </Transition.Child>
         </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </div>
 );
 
 export default FilterSlideOver;

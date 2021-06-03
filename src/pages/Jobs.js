@@ -15,11 +15,23 @@ import { toKilo } from "../helpers/utils";
 const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
-  const [showPreview, setShowPreview] = useState(false);
+  // const [showPreview, setShowPreview] = useState(false);
 
-  const togglePreview = () => {
-    setShowPreview(!showPreview);
-  };
+  // const togglePreview = () => {
+  //   setShowPreview(!showPreview);
+  // };
+  //
+  // const handleEnter = () => {
+  //   setShowPreview(true);
+  // };
+  //
+  // const handleLeave = () => {
+  //   setShowPreview(false);
+  // };
+
+  // useEffect(() => {
+  //   console.log(showPreview);
+  // }, [showPreview]);
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
@@ -74,6 +86,8 @@ const Jobs = () => {
     fetchData();
   }, []);
 
+  const togglePreview = useToggle();
+
   const renderTableData = useCallback((jobs) => {
     return jobs.map((job, index) => {
       const {
@@ -89,22 +103,18 @@ const Jobs = () => {
         closingDate,
       } = job;
       return (
-        <tr key={id}>
+        <tr key={id} onDoubleClick={togglePreview.toggle}>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
               <div class="flex-shrink-0 h-10 w-10">
                 <ProfilePicture id={uid} />
               </div>
-              <div
-                class="ml-4"
-                onMouseEnter={togglePreview}
-                onMouseLeave={togglePreview}
-              >
+              <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">{title}</div>
                 <div class="text-sm text-gray-500">{experience}</div>
               </div>
 
-              <PreviewModal isShowing={showPreview} />
+              <PreviewModal isShowing={togglePreview.isShowing} />
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
@@ -127,8 +137,7 @@ const Jobs = () => {
     });
   }, []);
 
-  const { isShowing, toggle } = useToggle();
-
+  const toggleSlideOver = useToggle();
   return (
     <div class="my-8">
       <div class="md:grid md:grid-cols-4 md:gap-6 divide divide-x">
@@ -167,7 +176,7 @@ const Jobs = () => {
                         <th scope="col">
                           <span class="sr-only">Search</span>
                           <button
-                            onClick={toggle}
+                            onClick={toggleSlideOver.toggle}
                             className="focus:outline-none flex items-center justify-end w-full px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             type="button"
                           >
@@ -205,8 +214,8 @@ const Jobs = () => {
           </div>
         </div>
         <FilterSlideOver
-          isShowing={isShowing}
-          hide={toggle}
+          isShowing={toggleSlideOver.isShowing}
+          hide={toggleSlideOver.toggle}
           requestFilter={requestFilter}
           requestPage={requestPage}
           pageConfig={pageConfig}

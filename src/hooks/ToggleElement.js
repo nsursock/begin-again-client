@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useToggle = () => {
   const [isShowing, setIsShowing] = useState(false);
@@ -6,6 +6,10 @@ const useToggle = () => {
   function toggle() {
     setIsShowing(!isShowing);
   }
+
+  useEffect(() => {
+    console.log(isShowing);
+  }, [isShowing]);
 
   return {
     isShowing,
