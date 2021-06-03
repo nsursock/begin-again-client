@@ -7,9 +7,9 @@ const useToggle = () => {
     setIsShowing(!isShowing);
   }
 
-  useEffect(() => {
-    console.log(isShowing);
-  }, [isShowing]);
+  // useEffect(() => {
+  //   console.log(isShowing);
+  // }, [isShowing]);
 
   return {
     isShowing,

@@ -103,7 +103,7 @@ const Navbar = () => {
             </div>
             {user ? (
               <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button class="p-1 rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <button class="p-1 rounded-full text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-800 focus:ring-white">
                   <span class="sr-only">View notifications</span>
                   <svg
                     class="h-6 w-6"
@@ -127,7 +127,7 @@ const Navbar = () => {
                     <button
                       onClick={toggleProfileMenu}
                       type="button"
-                      class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-800 focus:ring-white"
                       id="user-menu-button"
                       aria-expanded="false"
                       aria-haspopup="true"
@@ -165,7 +165,7 @@ const Navbar = () => {
                     leaveTo="opacity-0 scale-x-0 -translate-x-1/2"
                   >
                     <div
-                      class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-gray-300 ring-opacity-5 focus:outline-none"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="user-menu-button"

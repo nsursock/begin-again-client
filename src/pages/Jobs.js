@@ -6,32 +6,12 @@ import useToggle from "../hooks/ToggleElement";
 import HeaderButton from "../components/HeaderButton";
 import TableBar from "../components/TableBar";
 import FilterSlideOver from "../components/FilterSlideOver";
-import PreviewModal from "../components/PreviewModal";
+import JobListRow from "../components/JobListRow";
 import { db } from "../services/firebase";
-import ProfilePicture from "../components/ProfilePicture";
-import OptionsButton from "../components/OptionsButton";
-import { toKilo } from "../helpers/utils";
 
 const Jobs = () => {
   const [jobsRaw, setJobsRaw] = useState([]);
   const [error, setError] = useState(null);
-  // const [showPreview, setShowPreview] = useState(false);
-
-  // const togglePreview = () => {
-  //   setShowPreview(!showPreview);
-  // };
-  //
-  // const handleEnter = () => {
-  //   setShowPreview(true);
-  // };
-  //
-  // const handleLeave = () => {
-  //   setShowPreview(false);
-  // };
-
-  // useEffect(() => {
-  //   console.log(showPreview);
-  // }, [showPreview]);
 
   const { filteredItems, requestFilter } = useFilterableData(jobsRaw, {
     key: "",
@@ -86,58 +66,7 @@ const Jobs = () => {
     fetchData();
   }, []);
 
-  const togglePreview = useToggle();
-
-  const renderTableData = useCallback((jobs) => {
-    return jobs.map((job, index) => {
-      const {
-        id,
-        uid,
-        title,
-        experience,
-        schedule,
-        location,
-        salaryLow,
-        salaryHigh,
-        currency,
-        closingDate,
-      } = job;
-      return (
-        <tr key={id} onDoubleClick={togglePreview.toggle}>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex items-center">
-              <div class="flex-shrink-0 h-10 w-10">
-                <ProfilePicture id={uid} />
-              </div>
-              <div class="ml-4">
-                <div class="text-sm font-medium text-gray-900">{title}</div>
-                <div class="text-sm text-gray-500">{experience}</div>
-              </div>
-
-              <PreviewModal isShowing={togglePreview.isShowing} />
-            </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">{location}</div>
-            <div class="text-sm text-gray-500">{schedule}</div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-              {closingDate}
-            </span>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {currency} {toKilo(salaryLow)} - {toKilo(salaryHigh)}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <OptionsButton jobId={id} userId={uid} />
-          </td>
-        </tr>
-      );
-    });
-  }, []);
-
-  const toggleSlideOver = useToggle();
+  const { isShowing, toggle } = useToggle();
   return (
     <div class="my-8">
       <div class="md:grid md:grid-cols-4 md:gap-6 divide divide-x">
@@ -176,7 +105,7 @@ const Jobs = () => {
                         <th scope="col">
                           <span class="sr-only">Search</span>
                           <button
-                            onClick={toggleSlideOver.toggle}
+                            onClick={toggle}
                             className="focus:outline-none flex items-center justify-end w-full px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             type="button"
                           >
@@ -198,7 +127,9 @@ const Jobs = () => {
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      {renderTableData(paginatedItems)}
+                      {paginatedItems.map((job, index) => {
+                        return <JobListRow job={job} index={index} />;
+                      })}
                     </tbody>
                   </table>
                   {filteredItems.length !== 0 && (
@@ -214,8 +145,8 @@ const Jobs = () => {
           </div>
         </div>
         <FilterSlideOver
-          isShowing={toggleSlideOver.isShowing}
-          hide={toggleSlideOver.toggle}
+          isShowing={isShowing}
+          hide={toggle}
           requestFilter={requestFilter}
           requestPage={requestPage}
           pageConfig={pageConfig}
