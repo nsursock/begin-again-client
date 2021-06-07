@@ -1,6 +1,6 @@
-import HeroSection from "../components/HeroSection";
-import FeatureSection from "../components/FeatureSection";
-import CTASection from "../components/CTASection";
+import HeroSection from "../components/landing/HeroSection";
+import FeatureSection from "../components/landing/FeatureSection";
+import CTASection from "../components/landing/CTASection";
 
 function Home() {
   return (

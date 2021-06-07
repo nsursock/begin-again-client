@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
 import ReactDOM, { createPortal } from "react-dom";
 import { Transition } from "@headlessui/react";
+import htmr from "htmr";
 
 const PreviewModal = ({ isShowing, hide, job }) => {
   const [isReady, setIsReady] = useState(false);
@@ -10,6 +11,10 @@ const PreviewModal = ({ isShowing, hide, job }) => {
   });
 
   const createModal = () => {
+    const title = job.title;
+    const array = job.description.split(".");
+    const descr = array[0] + "." + array[1] + "...";
+
     return (
       <Transition show={isShowing}>
         <div
@@ -75,10 +80,10 @@ const PreviewModal = ({ isShowing, hide, job }) => {
                         class="text-lg leading-6 font-medium text-gray-900"
                         id="modal-title"
                       >
-                        {job.title}
+                        {title}
                       </h3>
                       <div class="mt-2">
-                        <p class="text-sm text-gray-500">{job.description}</p>
+                        <p class="text-sm text-gray-500 prose">{htmr(descr)}</p>
                       </div>
                     </div>
                   </div>

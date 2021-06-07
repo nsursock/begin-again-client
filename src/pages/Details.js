@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../services/firebase";
 import { toKilo } from "../helpers/utils";
 import htmr from "htmr";
+import moment from "moment";
 
 const Details = ({ match }) => {
   const {
@@ -38,7 +39,8 @@ const Details = ({ match }) => {
   const {
     title,
     schedule,
-    location,
+    city,
+    country,
     salaryLow,
     salaryHigh,
     currency,
@@ -97,7 +99,7 @@ const Details = ({ match }) => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                  {location}
+                  {city}, {country}
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <svg
@@ -130,7 +132,7 @@ const Details = ({ match }) => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                  Closing on {closingDate}
+                  Closing on {moment(closingDate).format("MMM D, YYYY")}
                 </div>
               </div>
             </div>

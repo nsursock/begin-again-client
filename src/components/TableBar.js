@@ -204,6 +204,10 @@ const TableBar = ({ numJobs, config, requestPage }) => {
           <option>3 per page</option>
           <option>5 per page</option>
           <option selected>10 per page</option>
+          <option>25 per page</option>
+          <option>50 per page</option>
+          <option>100 per page</option>
+          <option>200 per page</option>
         </select>
       </div>
     </div>

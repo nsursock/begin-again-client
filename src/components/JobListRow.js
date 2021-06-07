@@ -4,6 +4,7 @@ import PreviewModal from "../components/PreviewModal";
 import ProfilePicture from "../components/ProfilePicture";
 import OptionsButton from "../components/OptionsButton";
 import { toKilo } from "../helpers/utils";
+import moment from "moment";
 
 const JobListRow = ({ job, index }) => {
   const { isShowing, toggle } = useToggle();
@@ -13,7 +14,8 @@ const JobListRow = ({ job, index }) => {
     title,
     experience,
     schedule,
-    location,
+    city,
+    country,
     salaryLow,
     salaryHigh,
     currency,
@@ -35,12 +37,14 @@ const JobListRow = ({ job, index }) => {
         </div>
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
-        <div class="text-sm text-gray-900">{location}</div>
+        <div class="text-sm text-gray-900">
+          {city}, {country}
+        </div>
         <div class="text-sm text-gray-500">{schedule}</div>
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-          {closingDate}
+          {moment(closingDate).format("MMM D, YYYY")}
         </span>
       </td>
       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
