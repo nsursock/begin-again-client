@@ -19,7 +19,7 @@ const ProfilePicture = ({ id }) => {
   if (loading)
     return (
       <svg
-        class="h-10 w-10 animate-spin-slow mr-2"
+        class="h-10 w-10 animate-spin-slow mr-2 text-indigo-600"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ const ProfilePicture = ({ id }) => {
   if (error)
     return (
       <svg
-        class="w-10 h-10"
+        class="w-10 h-10 text-indigo-600"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -64,9 +64,9 @@ const ProfilePicture = ({ id }) => {
     );
   } else
     return (
-      <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
+      <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-indigo-100">
         <svg
-          class="h-full w-full text-gray-300"
+          class="h-full w-full text-indigo-300"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
